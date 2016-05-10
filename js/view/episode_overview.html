@@ -1,0 +1,22 @@
+<div class="col-sm-12">
+  <div class="row">
+    <div class="col-sm-12">
+      <ol class="breadcrumb">
+        <li ng-click="episode.go('')">Series</li>
+        <li ng-click="episode.go('/season/' + episode.season.SerieID)">{{episode.season.SerieName}}</li>
+        <li class="active">{{episode.season.OriginalName || episode.season.Name}}</li>
+      </ol>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 list">
+      <div ng-repeat="(k, v) in episode.episodes" class="list-item episode-preview">
+        <div ng-click="!v.Missing && episode.go('/watch/' + v.ID)">
+          <img ng-class="v.Missing ? 'missing' : ''"
+               src="{{ v.StillPath ? 'http://image.tmdb.org/t/p/w185/' + v.StillPath : './assets/default_poster.jpg' }}"
+               alt="{{v.OriginalName}} S{{v.SeasonNumber}}E{{v.EpisodeNumber}}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

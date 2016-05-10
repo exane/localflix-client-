@@ -1,0 +1,6 @@
+node_modules
+public
+bin
+config.json
+localflix-*
+bundle.js

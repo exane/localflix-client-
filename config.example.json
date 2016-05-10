@@ -1,0 +1,10 @@
+{
+  "server": {
+    "url": "localhost",
+    "port": "3000"
+  },
+  "fileserver": {
+    "url": "localhost",
+    "port": "3001"
+  }
+}

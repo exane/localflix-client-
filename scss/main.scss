@@ -1,0 +1,42 @@
+@import "player";
+
+.list{
+  float:left;
+}
+
+.episode-preview {
+  height: 70px;
+}
+
+.breadcrumb {
+  li:not(.active) {
+    color:#6859ff;
+    cursor: pointer;
+  }
+}
+
+.missing{
+  -webkit-filter:grayscale(100%) brightness(60%);
+  filter:grayscale(100%);
+  pointer-events:none;
+  cursor:default;
+}
+
+.list-item{
+  margin:10px;
+  width:125px;
+  display:inline-block;
+  overflow:hidden;
+
+  img{
+    width:125px;
+    transition:transform .5s;
+    &:not(.missing):hover{
+      transform:scale(1.2);
+      backface-visibility:hidden;
+    }
+  }
+  p{
+    word-wrap:break-word;
+  }
+}
