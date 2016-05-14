@@ -6,9 +6,7 @@
 * Node.js >= v4.0
     
 ### Windows
-
-* download and extract [vlc 32bit v2.2.2](https://get.videolan.org/vlc/2.2.2/win32/vlc-2.2.2-win32.zip) in client/bin folder
-* download [Release](https://github.com/RSATom/WebChimera.js/releases/download/v0.2.4/WebChimera.js_v0.2.4_nw_v0.14.3_VLC_v2.2.2_ia32_win.zip) and extract in client/bin folder and overwrite all files
+* Node.js 32 bit (i.e if nvm installed use 'nvm arch 32' to switch)
 
 
 ### OSX
@@ -19,8 +17,8 @@
 ```sh
 cd project root
 cp config.example.json config.json
-npm run install
 npm install
+npm run vlc
 
 now place the content of the downloaded webchimera.js release into node_modules
 
@@ -32,7 +30,7 @@ npm run gulp
 # Run the app
 To start or test the app you can do
 ```sh
-npm run electron .
+npm run electron
 ```
 or you can pack it with
 ```sh
