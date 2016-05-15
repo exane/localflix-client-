@@ -1,49 +1,25 @@
-import angular from "angular";
-import route from "angular-route";
-import { Config } from "./public/service/Config";
-import { Episode } from "./public/component/Episode";
-import { Season } from "./public/component/Season";
-import { Home } from "./public/component/Home";
-import { Video } from "./public/component/Video";
-import { Request } from "./public/service/Requests";
+import React from "react"
+import { Provider } from 'react-redux'
+import { render } from "react-dom"
+import configureStore from './public/store'
+import { Router, Route, Link, hashHistory, useRouterHistory } from "react-router"
+import { createHashHistory } from 'history'
+import { syncHistoryWithStore } from 'react-router-redux'
+import { Home } from "./public/containers/Home"
+import { Serie } from "./public/containers/Serie"
+import { Season } from "./public/containers/Season"
+import { Video } from "./public/containers/Video"
 
-function config($routeProvider) {
-  $routeProvider
-  .when('/', {
-    templateUrl: './public/view/home.html',
-    controller: 'app.Home',
-    controllerAs: 'home'
-  })
-  .when('/season/:serie_id', {
-    templateUrl: './public/view/season_overview.html',
-    controller: 'app.Season',
-    controllerAs: 'season'
-  })
-  .when('/episode/:season_id', {
-    templateUrl: './public/view/episode_overview.html',
-    controller: 'app.Episode',
-    controllerAs: 'episode'
-  })
-  .when('/watch/:id', {
-    templateUrl: './public/view/video.html',
-    controller: 'app.Video',
-    controllerAs: 'video'
-  })
-  .otherwise({redirectTo: '/'});
-}
-config.$inject = ['$routeProvider'];
+const appHistory = useRouterHistory(createHashHistory)({queryKey: false})
+const store = configureStore(hashHistory)
 
-angular.module("app", [route])
-.controller("app.Episode", Episode)
-.controller("app.Season", Season)
-.controller("app.Home", Home)
-.controller("app.Video", Video)
-.service("app.Request", Request)
-.service("app.Config", Config)
-.config(['$compileProvider', function($compileProvider) {
-  $compileProvider.imgSrcSanitizationWhitelist(/^\s*((chrome-extension|https?|file|ftp|blob):|data:image\/)/);
-  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|file|chrome-extension|ftp|mailto|tel):/);
-}])
-.config(config);
-
-angular.bootstrap(document, ["app"])
+render((
+  <Provider store={store}>
+    <Router history={appHistory}>
+      <Route path="/" component={Home}></Route>
+      <Route path="serie/:serieID" component={Serie}></Route>
+      <Route path="season/:seasonID" component={Season}></Route>
+      <Route path="watch/:videoID" component={Video}></Route>
+    </Router>
+  </Provider>
+), document.querySelector("#root"))

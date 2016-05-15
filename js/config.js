@@ -12,5 +12,5 @@ class Config {
   }
 }
 
-Config.$inject = []
-export { Config }
+let cfg = new Config()
+export default cfg
