@@ -10,10 +10,14 @@ class Season extends Component {
     this.props.dispatch(getSeason(this.props.params.seasonID))
   }
 
+  get season() {
+    return this.props.rootReducer.seasons[this.props.params.seasonID] || {}
+  }
+
   get breadcrumb() {
-    const season = this.props.rootReducer.season
+    const season = this.season
     let list = []
-    if(season.hasOwnProperty('ID')) {
+    if(season) {
       list = [
         {link_to: "/", title: "Series"},
         {link_to: `/serie/${season.SerieID}`, title: season.SerieName},
@@ -33,7 +37,7 @@ class Season extends Component {
         </div>
         <div className="row">
           <div className="col-sm-12 list">
-            <Items link_to="/watch/:ID" list={this.props.rootReducer.season.Episodes || []} smallPreview={true}/>
+            <Items link_to="/watch/:ID" list={this.season.Episodes || []} smallPreview={true}/>
           </div>
         </div>
       </div>

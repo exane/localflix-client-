@@ -1,51 +1,66 @@
 import { combineReducers } from 'redux'
 
-/*
-const Request = (state, action) =>  {
-  switch(action.type) {
-    case "REQUEST_SERIES":
-      return {
-
-      }
-  }
-}
-
-const Requests = (state = [], action) => {
-  switch(action.type) {
-    case "REQUEST_SERIES":
-      return [...state, Request()]
-  }
-}*/
-
 const defaultState = {
-  series: [],
-  serie: [],
-  season: {},
-  video: {},
+  series: {},
+  seasons: {},
+  episodes: {},
 }
 
-export default (state = defaultState, action) => {
+const series = (state = defaultState.series, action) => {
   switch(action.type) {
     case "RECEIVE_SERIES":
+      let series = {...action.series}
+      let res = {}
+      Object.keys(series).forEach((key) => {
+        res[series[key].ID] = series[key]
+      })
       return Object.assign({}, state, {
-        series: action.series
+        ...res
       })
     case "RECEIVE_SERIE":
-      return Object.assign({}, state, {
-        serie: action.serie
-      })
-    case "RECEIVE_SEASON":
-      return Object.assign({}, state, {
-        season: action.season
-      })
-    case "RECEIVE_VIDEO":
-      return Object.assign({}, state, {
-        video: action.video
-      })
-    case "REQUEST_SERIES":
-    case "REQUEST_SERIE":
-    case "REQUEST_SEASON":
+      let obj = {
+        [action.id]: {
+          ...action.serie
+        }
+      }
+      return Object.assign({}, state, obj)
     default:
       return state
   }
 }
+
+const seasons = (state = defaultState.seasons, action) => {
+  switch(action.type) {
+    case "RECEIVE_SEASON":
+      let obj = {
+        [action.id]: {
+          ...action.season
+        }
+      }
+      return Object.assign({}, state, obj)
+    default:
+      return state
+  }
+}
+
+const episodes = (state = defaultState.episodes, action) => {
+  switch(action.type) {
+    case "RECEIVE_VIDEO":
+      let obj = {
+        [action.id]: {
+          ...action.video
+        }
+      }
+      return Object.assign({}, state, obj)
+    default:
+      return state
+  }
+}
+
+const cr = combineReducers({
+  series,
+  seasons,
+  episodes,
+})
+
+export default cr

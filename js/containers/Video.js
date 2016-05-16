@@ -21,7 +21,7 @@ class Video extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    const url = `${this.config.fileserver.url}:${this.config.fileserver.port}/${newProps.rootReducer.video.SerieName}/${newProps.rootReducer.video.SeasonName}/${newProps.rootReducer.video.Name}.${newProps.rootReducer.video.Extension}`
+    const url = `${this.config.fileserver.url}:${this.config.fileserver.port}/${this.video(newProps).SerieName}/${this.video(newProps).SeasonName}/${this.video(newProps).Name}.${this.video(newProps).Extension}`
     this.player.addPlaylist(encodeURI(url))
   }
 
@@ -29,8 +29,16 @@ class Video extends Component {
     this.player.stop()
   }
 
+  video(newProps = undefined) {
+    let ctx = this.props
+    if(newProps) {
+      ctx = newProps
+    }
+    return ctx.rootReducer.episodes[ctx.params.videoID] || {}
+  }
+
   get breadcrumb() {
-    const video = this.props.rootReducer.video
+    const video = this.video()
     let list = []
     if(video.hasOwnProperty('ID')) {
       list = [

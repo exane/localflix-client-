@@ -10,6 +10,11 @@ class Home extends Component {
     this.props.dispatch(allSeries())
   }
 
+  get series() {
+    const l = this.props.rootReducer.series
+    return Object.keys(l).map((key) => l[key])
+  }
+
   render() {
     return (
       <div className="col-sm-12">
@@ -19,7 +24,7 @@ class Home extends Component {
               <li className="active">Series</li>
             </ol>
           </div>
-          <Items link_to="/serie/:ID" list={ this.props.rootReducer.series || [] }/>
+          <Items link_to="/serie/:ID" list={ this.series || [] }/>
         </div>
       </div>
     )

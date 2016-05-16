@@ -55,23 +55,30 @@ const receiveVideo = (videoID, json) => {
   }
 }
 
+const isCached = (state = {}) => {
+  return !!Object.keys(state).length
+}
+
 export const allSeries = () => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const series = getState().rootReducer.series
     dispatch(requestSeries())
     return fetch(`${cfg.server.url}:${cfg.server.port}/series`)
     .then(res => res.json())
     .then(json => {
+      console.log("request all series");
       return dispatch(receiveSeries(json))
     })
   }
 }
 export const getSerie = serieID => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const serie = getState().rootReducer.series[serieID]
     dispatch(requestSerie(serieID))
     return fetch(`${cfg.server.url}:${cfg.server.port}/serie/${serieID}`)
     .then(res => res.json())
     .then(json => {
-      console.log(json);
+      console.log("request serie", serieID);
       return dispatch(receiveSerie(serieID, json))
     })
   }

@@ -11,15 +11,19 @@ class Serie extends Component {
   }
 
   get breadcrumb() {
-    const serie = this.props.rootReducer.serie
+    const serie = this.serie
     let list = []
-    if(serie.hasOwnProperty('ID')) {
+    if(serie) {
       list = [
         {link_to: "/", title: "Series"},
         {title: serie.OriginalName},
       ]
     }
     return list
+  }
+
+  get serie() {
+    return this.props.rootReducer.series[this.props.params.serieID] || {}
   }
 
   render() {
@@ -30,7 +34,7 @@ class Serie extends Component {
             <Breadcrumb list={this.breadcrumb} />
           </div>
           <div className="col-sm-12 list">
-            <Items link_to="/season/:ID" list={this.props.rootReducer.serie.Seasons || []}/>
+            <Items link_to="/season/:ID" list={this.serie.Seasons || []}/>
           </div>
         </div>
       </div>

@@ -41,6 +41,7 @@ export class Items extends Component {
         </div>
       )
     })
+
     return (
       <div className="col-sm-12 list">
         {items}
