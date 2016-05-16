@@ -15,6 +15,9 @@ class Video extends Component {
   componentDidMount() {
     this.player = new wjs("#player").addPlayer({autoplay: true})
     this.player.volume(50)
+    this.player.onFirstPlay(() => {
+      this.player.aspectRatio("16:9")
+    })
   }
 
   componentWillReceiveProps(newProps) {
