@@ -5,6 +5,14 @@ import classNames from "classnames"
 export default class Breadcrumb extends Component {
   static propTypes = {
     list: React.PropTypes.array.isRequired,
+    //onEdit: React.PropTypes.func.isRequired,
+    //onSave: React.PropTypes.func.isRequired,
+    //edit: React.PropTypes.bool.isRequired,
+  }
+
+  get button() {
+    const onClick = this.props.edit ? this.props.onSave : this.props.onEdit
+    return <div className="btn btn-success" onClick={onClick}>{this.props.edit ? "Save" : "Edit"}</div>
   }
 
   render() {
@@ -21,9 +29,16 @@ export default class Breadcrumb extends Component {
       )
     })
     return (
-      <ol className="breadcrumb">
-        {items}
-      </ol>
+      <div className="row">
+        <div className="col-sm-11">
+          <ol className="breadcrumb">
+            {items}
+          </ol>
+        </div>
+        <div className="col-sm-1">
+          {this.button}
+        </div>
+      </div>
     )
   }
 }

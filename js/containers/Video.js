@@ -4,8 +4,13 @@ import { getVideo } from "../actions"
 import wjs from "wcjs-player"
 import config from "../config"
 import Breadcrumb from "../components/Breadcrumb"
+import { Edit } from "../components/Edit"
 
 class Video extends Component {
+  state = {
+    edit: true
+  }
+
   constructor(props) {
     super(props)
     this.config = config.load()
@@ -13,7 +18,7 @@ class Video extends Component {
   }
 
   componentDidMount() {
-    this.player = new wjs("#player").addPlayer({autoplay: true})
+    this.player = new wjs("#player").addPlayer({autoplay: !this.state.edit})
     this.player.volume(50)
     this.player.onFirstPlay(() => {
       this.player.aspectRatio("16:9")
@@ -51,13 +56,22 @@ class Video extends Component {
     return list
   }
 
+  onEdit() {
+    this.setState({edit: true})
+  }
+
+  onSave() {
+    this.setState({edit: false})
+  }
+
   render() {
+    const edit = this.state.edit ? <Edit values={this.video()}/> : ''
     return (
       <div className="col-sm-12">
+        <Breadcrumb list={this.breadcrumb} onSave={this::this.onSave} onEdit={this::this.onEdit}
+                    edit={this.state.edit}/>
+        {edit}
         <div className="row">
-          <div className="col-sm-12">
-            <Breadcrumb list={this.breadcrumb}/>
-          </div>
           <div className="col-sm-12">
             <div id="player"></div>
           </div>

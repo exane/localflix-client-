@@ -1,5 +1,19 @@
 @import "player";
 
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.form-group {
+  label {
+    width:100%;
+  }
+  textarea {
+    height: 75px;
+  }
+}
+
 .list{
   float:left;
 }

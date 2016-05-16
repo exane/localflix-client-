@@ -6,6 +6,9 @@ export class Items extends Component {
   static propTypes = {
     list: React.PropTypes.array.isRequired,
     link_to: React.PropTypes.string.isRequired,
+/*
+    editMode: React.PropTypes.bool.isRequired,
+*/
     smallPreview: React.PropTypes.bool,
   }
 
