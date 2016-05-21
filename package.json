@@ -6,7 +6,7 @@
   "scripts": {
     "babel": "babel js/app.js --out-file build/app.js --source-maps inline",
     "watch_babel": "babel js/app.js --out-file build/app.js --watch --source-maps inline",
-    "reinstall": "rm -rf node_modules && npm i",
+    "reinstall": "npm run cleanup && npm i && npm run vlc",
     "gulp": "gulp",
     "vlc": "cp -r node_modules/wcjs-prebuilt/bin/* bin&& rm -rf node_modules/webchimera.js&& cd node_modules&& mkdir webchimera.js&& cd ..&& cp -r node_modules/wcjs-prebuilt/* node_modules/webchimera.js",
     "cleanup": "rm -rf bin && mkdir bin && echo '' > bin/.gitkeep && rm -rf node_modules && rm -rf public && mkdir public && echo '' > public/.gitkeep",

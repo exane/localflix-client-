@@ -57,10 +57,21 @@ const episodes = (state = defaultState.episodes, action) => {
   }
 }
 
+const data = (state = [], action) => {
+  switch(action.type) {
+    case "RECEIVE_SEARCH_SERIES":
+      console.log(action.data);
+      return action.data
+    default:
+      return state
+  }
+
+}
 const cr = combineReducers({
   series,
   seasons,
   episodes,
+  data,
 })
 
 export default cr

@@ -23,7 +23,8 @@ export default class Header extends Component {
     return <Menu edit={this.props.edit}
                  onEdit={this.props.onEdit}
                  onSave={this.props.onSave}
-                 onCancel={this.props.onCancel} />
+                 onCancel={this.props.onCancel}
+    />
   }
 
   render() {
