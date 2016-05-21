@@ -1,11 +1,12 @@
 import React, { Component } from "react"
 
-export class Edit extends Component {
+export default class Edit extends Component {
   editable(arr) {
     const hide = ["ID", "CreatedAt", "UpdatedAt", "DeletedAt", "Seasons", "Episodes", "Series", "SerieID", "SeasonNumber"]
+    const allow = ["Name", "Description", "AirDate", "EpisodeNumber", "OriginalName"]
 
     return arr.filter((val) => {
-      return !hide.includes(val)
+      return allow.includes(val)
     })
   }
 

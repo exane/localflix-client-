@@ -5,10 +5,11 @@ import { Link } from 'react-router'
 import { Items } from "../components/Items"
 import Breadcrumb from "../components/Breadcrumb"
 import { Edit } from "../components/Edit"
+import Header from "../components/Header"
 
 class Home extends Component {
   state = {
-    edit: true
+    edit: false
   }
 
   constructor(props) {
@@ -23,24 +24,15 @@ class Home extends Component {
 
   get breadcrumb() {
     return [
-      {link_to: "/", title: "Series"},
+      { title: "Series" },
     ]
-  }
-
-  onEdit() {
-    this.setState({edit: true})
-  }
-
-  onSave() {
-    this.setState({edit: false})
   }
 
   render() {
     const edit = this.state.edit ? <Edit values={this.series} /> : ''
     return (
       <div className="col-sm-12">
-        <Breadcrumb list={this.breadcrumb} onSave={this::this.onSave} onEdit={this::this.onEdit}
-                    edit={this.state.edit}/>
+        <Header breadcrumb={this.breadcrumb} />
         <div className="row">
           <Items link_to="/serie/:ID" list={ this.series || [] }/>
         </div>

@@ -2,8 +2,7 @@ import React, { Component } from "react"
 import { getSerie } from "../actions"
 import { connect } from 'react-redux'
 import { Items } from "../components/Items"
-import Breadcrumb from "../components/Breadcrumb"
-import { Edit } from "../components/Edit"
+import Header from "../components/Header"
 
 class Serie extends Component {
   state = {
@@ -35,16 +34,24 @@ class Serie extends Component {
     this.setState({edit: true})
   }
 
+  onCancel() {
+    this.setState({edit: false})
+  }
+
   onSave() {
     this.setState({edit: false})
   }
 
   render() {
-    const edit = this.state.edit ? <Edit values={this.serie} /> : ''
     return (
       <div className="col-sm-12">
-        <Breadcrumb list={this.breadcrumb} onSave={this::this.onSave} onEdit={this::this.onEdit} edit={this.state.edit} />
-        {edit}
+        <Header breadcrumb={this.breadcrumb}
+                onSave={this::this.onSave}
+                onEdit={this::this.onEdit}
+                onCancel={this::this.onCancel}
+                edit={this.state.edit}
+                editValues={this.serie}
+        />
         <div className="row">
           <div className="col-sm-12 list">
             <Items editMode={this.state.edit} link_to="/season/:ID" list={this.serie.Seasons || []}/>

@@ -29,16 +29,9 @@ export default class Breadcrumb extends Component {
       )
     })
     return (
-      <div className="row">
-        <div className="col-sm-11">
-          <ol className="breadcrumb">
-            {items}
-          </ol>
-        </div>
-        <div className="col-sm-1">
-          {this.button}
-        </div>
-      </div>
+      <ol className="breadcrumb">
+        {items}
+      </ol>
     )
   }
 }

@@ -4,10 +4,11 @@ import { getSeason } from "../actions"
 import { connect } from 'react-redux'
 import Breadcrumb from "../components/Breadcrumb"
 import { Edit } from "../components/Edit"
+import Header from "../components/Header"
 
 class Season extends Component {
   state = {
-    edit: true
+    edit: false
   }
 
   constructor(props) {
@@ -40,13 +41,16 @@ class Season extends Component {
     this.setState({edit: false})
   }
 
+  onCancel() {
+    this.setState({edit: false})
+  }
+
   render() {
-    const edit = this.state.edit ? <Edit values={this.season} /> : ''
     return (
       <div className="col-sm-12">
-        <Breadcrumb list={this.breadcrumb} onSave={this::this.onSave} onEdit={this::this.onEdit}
-                    edit={this.state.edit}/>
-        {edit}
+        <Header breadcrumb={this.breadcrumb} onSave={this::this.onSave} onEdit={this::this.onEdit} onCancel={this::this.onCancel}
+                edit={this.state.edit}
+                editValues={this.season}/>
         <div className="row">
           <div className="col-sm-12 list">
             <Items link_to="/watch/:ID" list={this.season.Episodes || []} smallPreview={true}/>
