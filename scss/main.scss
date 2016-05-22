@@ -1,17 +1,18 @@
 @import "player";
+@import "autosuggest";
 
-body {
-  -webkit-user-select: none;
-  user-select: none;
-  overflow-y: scroll;
+body{
+  -webkit-user-select:none;
+  user-select:none;
+  overflow-y:scroll;
 }
 
-.form-group {
-  label {
+.form-group{
+  label{
     width:100%;
   }
-  textarea {
-    height: 75px;
+  textarea{
+    height:75px;
   }
 }
 
@@ -19,14 +20,18 @@ body {
   float:left;
 }
 
-.preview {
-  height: 70px;
+.image-preview-small {
+  width: 30px;
 }
 
-.breadcrumb {
-  li:not(.active) {
+.preview{
+  height:70px;
+}
+
+.breadcrumb{
+  li:not(.active){
     color:#6859ff;
-    cursor: pointer;
+    cursor:pointer;
   }
 }
 

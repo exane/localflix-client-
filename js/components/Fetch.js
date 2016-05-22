@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Autocomplete from "react-autocomplete"
+import Autosuggest from 'react-autosuggest';
 import { searchSeries } from "../actions"
 import { connect } from 'react-redux';
 
@@ -8,11 +8,11 @@ export default class Fetch extends Component {
 
   state = {
     active: true,
-    searchVal: ""
+    searchVal: "",
+    suggestions: []
   }
 
   onClick() {
-    this.props.dispatch(searchSeries("berserk"))
     this.setState({
       active: !this.state.active
     })
@@ -27,18 +27,55 @@ export default class Fetch extends Component {
     )
   }
 
+  getSuggestions(value) {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+
+    return this.props.store.filter(item => {
+      return item.Name.toLowerCase().indexOf(inputValue) >= 0
+    });
+  }
+
+  getSuggestionValue(suggestion) { // when suggestion selected, this function tells
+    return suggestion.Name;                 // what should be the value of the input
+  }
+
+  renderSuggestion(suggestion) {
+    let src = `http://image.tmdb.org/t/p/w185/${suggestion.poster_path}`
+    if(!suggestion.poster_path) {
+      src = "./assets/default_poster.jpg"
+    }
+    return (
+      <span>
+        <img className="image-preview-small" src={src}/>
+        <span>{suggestion.Name} ({suggestion.first_air_date})</span>
+      </span>
+    );
+  }
+
+  onChange(event, {newValue}) {
+    this.props.dispatch(searchSeries(newValue))
+    this.setState({
+      searchVal: newValue
+    });
+  }
+
+  onSuggestionsUpdateRequested({value}) {
+    this.setState({
+      suggestions: this.getSuggestions(value)
+    });
+  }
+
   get input() {
     if(!this.state.active) return
-    console.log(this.props.store);
-    //return <input className="form-control input-sm" type="text"/>
-    return <Autocomplete
-      value={this.state.searchVal}
-      onChange={(e, searchVal) => {
-        this.setState({searchVal})
-      }}
-      items={this.props.store}
-      renderItem={(item) => {
-        return <div>{item.Name}</div>
+    return <Autosuggest
+      suggestions={this.state.suggestions}
+      onSuggestionsUpdateRequested={this::this.onSuggestionsUpdateRequested}
+      getSuggestionValue={this::this.getSuggestionValue}
+      renderSuggestion={this::this.renderSuggestion}
+      inputProps={{
+        onChange: this::this.onChange,
+        value: this.state.searchVal,
       }}
     />
   }
