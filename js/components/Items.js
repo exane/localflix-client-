@@ -24,7 +24,17 @@ export class Items extends Component {
 
   render() {
     const list = this.props.list || []
-    const items = list.map((item, id) => {
+
+    list.sort((a, b) => {
+      const parse = (x) => {
+        return (
+          parseInt(x.Name) || parseInt(x.EpisodeNumber) || parseInt(x.SeasonNumber)
+        )
+      }
+      return parse(a) - parse(b)
+    })
+
+    let items = list.map((item, id) => {
       let src = "./assets/default_poster.jpg"
       if(item.PosterPath) {
         src = `http://image.tmdb.org/t/p/w185/${item.PosterPath}`
