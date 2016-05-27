@@ -14,7 +14,8 @@
     "compile-win32": "electron-packager . localflix --platform=win32 --arch=ia32",
     "compile-osx": "electron-packager . localflix --platform=darwin --arch=x64",
     "compile": "electron-packager . localflix --all",
-    "electron": "electron ."
+    "electron": "electron .",
+    "electron-version": "electron -v"
   },
   "author": "Tim Meier",
   "license": "ISC",
@@ -25,7 +26,7 @@
     "babel-preset-stage-0": "^6.5.0",
     "classnames": "^2.2.5",
     "electron-packager": "^7.0.1",
-    "electron-prebuilt": "0.37.8",
+    "electron-prebuilt": "1.1.0",
     "gulp": "^3.9.1",
     "gulp-babel": "latest",
     "gulp-concat": "^2.6.0",
@@ -39,7 +40,6 @@
     "react-router-redux": "^4.0.4",
     "redux": "^3.5.2",
     "redux-thunk": "^2.1.0",
-    "wcjs-player": "^0.5.7",
-    "wcjs-prebuilt": "*"
+    "wcjs-player": "0.5.8"
   }
 }

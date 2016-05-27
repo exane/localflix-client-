@@ -6,7 +6,7 @@ import Header from "../components/Header"
 
 class Serie extends Component {
   state = {
-    edit: true
+    edit: false
   }
 
   constructor(props) {
