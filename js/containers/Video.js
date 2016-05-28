@@ -37,6 +37,7 @@ class Video extends Component {
     this.player.addPlaylist({
       url: encodeURI(url),
       subtitles: this.subtitles(newProps),
+      //aspectRatio: "default",
     })
   }
 

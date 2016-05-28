@@ -70,8 +70,11 @@
 
 .wcp-canvas { z-index: 1 }
 
+$player_width: 890px;
+
 #player {
-	height: calc(100vh - 185px);
+	width: $player_width;
+	height: calc(#{$player_width} * 9/16);
 }
 
 .wcp-menu {
