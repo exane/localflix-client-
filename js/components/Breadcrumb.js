@@ -10,11 +10,6 @@ export default class Breadcrumb extends Component {
     //edit: React.PropTypes.bool.isRequired,
   }
 
-  get button() {
-    const onClick = this.props.edit ? this.props.onSave : this.props.onEdit
-    return <div className="btn btn-success" onClick={onClick}>{this.props.edit ? "Save" : "Edit"}</div>
-  }
-
   render() {
     const items = this.props.list.map((item, index) => {
       let isLastItem = !item.link_to

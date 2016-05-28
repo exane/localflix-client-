@@ -14,13 +14,18 @@ class Serie extends Component {
     this.props.dispatch(getSerie(this.props.params.serieID))
   }
 
+  parseTitle(title = "") {
+    return title.replace(/[?\s]*/, "")
+  }
+
   get breadcrumb() {
     const serie = this.serie
+    console.log(serie)
     let list = []
     if(serie) {
       list = [
         {link_to: "/", title: "Series"},
-        {title: serie.OriginalName},
+        {title: this.parseTitle(serie.OriginalName) || this.parseTitle(serie.Name) || "Unknown"},
       ]
     }
     return list

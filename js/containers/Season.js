@@ -20,6 +20,10 @@ class Season extends Component {
     return this.props.rootReducer.seasons[this.props.params.seasonID] || {}
   }
 
+  parseTitle(title = "") {
+    return title.replace(/[?\s]*/, "")
+  }
+
   get breadcrumb() {
     const season = this.season
     let list = []
@@ -27,7 +31,7 @@ class Season extends Component {
       list = [
         {link_to: "/", title: "Series"},
         {link_to: `/serie/${season.SerieID}`, title: season.SerieName},
-        {title: season.OriginalName || season.Name},
+        {title: this.parseTitle(season.OriginalName) || this.parseTitle(season.Name)},
       ]
     }
     return list
