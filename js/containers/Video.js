@@ -24,12 +24,20 @@ class Video extends Component {
     this.player.onFirstPlay(() => {
       this.player.aspectRatio("16:9")
       this.state.edit ? this.player.pause() : ''
+      this.player.subTrack(1)
     })
   }
 
+  urlPath(props = this.props) {
+    return `${this.config.fileserver.url}:${this.config.fileserver.port}/${this.video(props).SerieName}/${this.video(props).SeasonName}`
+  }
+
   componentWillReceiveProps(newProps) {
-    const url = `${this.config.fileserver.url}:${this.config.fileserver.port}/${this.video(newProps).SerieName}/${this.video(newProps).SeasonName}/${this.video(newProps).Name}.${this.video(newProps).Extension}`
-    this.player.addPlaylist(encodeURI(url))
+    const url = `${this.urlPath(newProps)}/${this.video(newProps).Name}.${this.video(newProps).Extension}`
+    this.player.addPlaylist({
+      url: encodeURI(url),
+      subtitles: this.subtitles(newProps),
+    })
   }
 
   componentWillUnmount() {
@@ -68,6 +76,16 @@ class Video extends Component {
 
   onCancel() {
     this.setState({edit: false})
+  }
+
+  subtitles(props) {
+    const video = this.video(props)
+    if(!video.Subtitles || !video.Subtitles.length) return {}
+    let result = {}
+    video.Subtitles.forEach((sub, index) => {
+      result[sub.Name] = encodeURI(`${this.urlPath(props)}/${sub.Name}`)
+    })
+    return result
   }
 
   render() {
