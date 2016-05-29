@@ -41,12 +41,20 @@ const receiveSearchSeries = (data) => {
     data
   }
 }
+
+const handleResponse = (response) => {
+  if(response.status >= 400) {
+    console.error(response)
+    throw new Error("Bad response from server");
+  }
+  return response.json()
+}
+
 export const searchSeries = title => {
   return dispatch => {
     return fetch(`${cfg.server.url}:${cfg.server.port}/tmdb/search/${title}`)
-      .then(res => res.json())
+      .then(res => handleResponse(res))
       .then(json => {
-        console.log("shots fired");
         return dispatch(receiveSearchSeries(json))
       })
   }
@@ -55,7 +63,7 @@ export const allSeries = () => {
   return (dispatch, getState) => {
     const series = getState().rootReducer.series
     return fetch(`${cfg.server.url}:${cfg.server.port}/series`)
-    .then(res => res.json())
+    .then(res => handleResponse(res))
     .then(json => {
       console.log("request all series");
       return dispatch(receiveSeries(json))
@@ -66,7 +74,7 @@ export const getSerie = serieID => {
   return (dispatch, getState) => {
     const serie = getState().rootReducer.series[serieID]
     return fetch(`${cfg.server.url}:${cfg.server.port}/serie/${serieID}`)
-    .then(res => res.json())
+    .then(res => handleResponse(res))
     .then(json => {
       console.log("request serie", serieID);
       return dispatch(receiveSerie(serieID, json))
@@ -76,9 +84,8 @@ export const getSerie = serieID => {
 export const getSeason = seasonID => {
   return dispatch => {
     return fetch(`${cfg.server.url}:${cfg.server.port}/season/${seasonID}`)
-    .then(res => res.json())
+    .then(res => handleResponse(res))
     .then(json => {
-      console.log(json);
       return dispatch(receiveSeason(seasonID, json))
     })
   }
@@ -86,7 +93,7 @@ export const getSeason = seasonID => {
 export const getVideo = videoID => {
   return dispatch => {
     return fetch(`${cfg.server.url}:${cfg.server.port}/episode/${videoID}`)
-    .then(res => res.json())
+    .then(res => handleResponse(res))
     .then(json => {
       console.log(json);
       return dispatch(receiveVideo(videoID, json))
