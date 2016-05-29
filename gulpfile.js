@@ -3,6 +3,7 @@ var sass = require("gulp-sass");
 var babel = require("gulp-babel")
 var sourcemaps = require("gulp-sourcemaps")
 var concat = require("gulp-concat")
+var argv = require("minimist")(process.argv.slice(2));
 
 gulp.task("sass", function() {
   gulp.src("./scss/**/*.scss")
@@ -25,6 +26,7 @@ gulp.task("babel", function() {
 })
 
 gulp.task("watch", function() {
+  if(argv.production) return;
   gulp.watch("./scss/**/*.scss", ['sass'])
   gulp.watch("./js/**/*.*", ['babel'])
 })
