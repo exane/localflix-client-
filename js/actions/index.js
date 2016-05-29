@@ -1,5 +1,5 @@
-import fetch from 'isomorphic-fetch'
 import config from "../config"
+import $ from "jquery"
 
 let cfg = config.load()
 
@@ -42,28 +42,32 @@ const receiveSearchSeries = (data) => {
   }
 }
 
-const handleResponse = (response) => {
-  if(response.status >= 400) {
-    console.error(response)
+const handleResponse = (response, xhr) => {
+  if(xhr.status >= 400) {
+    console.error(xhr)
     throw new Error("Bad response from server");
   }
-  return response.json()
+  return response
 }
 
 export const searchSeries = title => {
   return dispatch => {
-    return fetch(`${cfg.server.url}:${cfg.server.port}/tmdb/search/${title}`)
-      .then(res => handleResponse(res))
-      .then(json => {
-        return dispatch(receiveSearchSeries(json))
-      })
+    return $.ajax({
+      url: `${cfg.server.url}:${cfg.server.port}/tmdb/search/${title}`
+    })
+    .then((res, status, xhr) => handleResponse(res, xhr))
+    .then(json => {
+      return dispatch(receiveSearchSeries(json))
+    })
   }
 }
 export const allSeries = () => {
   return (dispatch, getState) => {
     const series = getState().rootReducer.series
-    return fetch(`${cfg.server.url}:${cfg.server.port}/series`)
-    .then(res => handleResponse(res))
+    return $.ajax({
+      url: `${cfg.server.url}:${cfg.server.port}/series`
+    })
+    .then((res, status, xhr) => handleResponse(res, xhr))
     .then(json => {
       console.log("request all series");
       return dispatch(receiveSeries(json))
@@ -73,8 +77,10 @@ export const allSeries = () => {
 export const getSerie = serieID => {
   return (dispatch, getState) => {
     const serie = getState().rootReducer.series[serieID]
-    return fetch(`${cfg.server.url}:${cfg.server.port}/serie/${serieID}`)
-    .then(res => handleResponse(res))
+    return $.ajax({
+      url: `${cfg.server.url}:${cfg.server.port}/serie/${serieID}`
+    })
+    .then((res, status, xhr) => handleResponse(res, xhr))
     .then(json => {
       console.log("request serie", serieID);
       return dispatch(receiveSerie(serieID, json))
@@ -83,8 +89,10 @@ export const getSerie = serieID => {
 }
 export const getSeason = seasonID => {
   return dispatch => {
-    return fetch(`${cfg.server.url}:${cfg.server.port}/season/${seasonID}`)
-    .then(res => handleResponse(res))
+    return $.ajax({
+      url: `${cfg.server.url}:${cfg.server.port}/season/${seasonID}`
+    })
+    .then((res, status, xhr) => handleResponse(res, xhr))
     .then(json => {
       return dispatch(receiveSeason(seasonID, json))
     })
@@ -92,8 +100,10 @@ export const getSeason = seasonID => {
 }
 export const getVideo = videoID => {
   return dispatch => {
-    return fetch(`${cfg.server.url}:${cfg.server.port}/episode/${videoID}`)
-    .then(res => handleResponse(res))
+    return $.ajax({
+      url: `${cfg.server.url}:${cfg.server.port}/episode/${videoID}`
+    })
+    .then((res, status, xhr) => handleResponse(res, xhr))
     .then(json => {
       console.log(json);
       return dispatch(receiveVideo(videoID, json))
