@@ -32,7 +32,7 @@ class Serie extends Component {
   }
 
   get serie() {
-    return this.props.rootReducer.series[this.props.params.serieID] || {}
+    return this.props.store.series[this.props.params.serieID] || {}
   }
 
   onEdit() {

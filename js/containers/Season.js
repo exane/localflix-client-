@@ -17,7 +17,7 @@ class Season extends Component {
   }
 
   get season() {
-    return this.props.rootReducer.seasons[this.props.params.seasonID] || {}
+    return this.props.store.seasons[this.props.params.seasonID] || {}
   }
 
   parseTitle(title = "") {

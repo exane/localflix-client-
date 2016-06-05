@@ -50,7 +50,7 @@ class Video extends Component {
     if(newProps) {
       ctx = newProps
     }
-    return ctx.rootReducer.episodes[ctx.params.videoID] || {}
+    return ctx.store.episodes[ctx.params.videoID] || {}
   }
 
   get breadcrumb() {

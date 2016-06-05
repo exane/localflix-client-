@@ -91,5 +91,5 @@ export default class Fetch extends Component {
 }
 
 export default connect(state => {
-  return {store: state.rootReducer.data}
+  return {store: state.store.data}
 })(Fetch)

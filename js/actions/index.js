@@ -63,7 +63,7 @@ export const searchSeries = title => {
 }
 export const allSeries = () => {
   return (dispatch, getState) => {
-    const series = getState().rootReducer.series
+    const series = getState().store.series
     return $.ajax({
       url: `${cfg.server.url}:${cfg.server.port}/series`
     })
@@ -76,7 +76,7 @@ export const allSeries = () => {
 }
 export const getSerie = serieID => {
   return (dispatch, getState) => {
-    const serie = getState().rootReducer.series[serieID]
+    const serie = getState().store.series[serieID]
     return $.ajax({
       url: `${cfg.server.url}:${cfg.server.port}/serie/${serieID}`
     })

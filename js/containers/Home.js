@@ -18,7 +18,7 @@ class Home extends Component {
   }
 
   get series() {
-    const l = this.props.rootReducer.series
+    const l = this.props.store.series
     return Object.keys(l).map((key) => l[key])
   }
 
