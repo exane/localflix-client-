@@ -28,6 +28,10 @@ class Video extends Component {
       this.state.edit ? this.player.pause() : ''
       this.player.subTrack(1)
     })
+
+    this.player.onError((err) => {
+      console.error(err)
+    })
   }
 
   urlPath(props = this.props) {
