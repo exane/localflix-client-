@@ -44,33 +44,34 @@ body{
   display:inline-block;
   overflow:hidden;
 
-  &:hover img {
+  &:hover img{
     transform:scale(1.2);
   }
-  &:hover div {
-    opacity: 0;
+  &:hover div{
+    opacity:0;
   }
-  a {
+  a{
     text-decoration:none;
   }
 
-  $height: 30px;
+  $height:30px;
   a > div{
     margin-top:-$height;
     height:$height;
-    line-height: $height;
+    line-height:$height;
     width:100%;
     background:black;
     position:relative;
     opacity:0.8;
     color:white;
     padding:0 10px;
-    white-space: nowrap;
+    white-space:nowrap;
     transition:opacity .5s;
   }
 
   img{
     width:125px;
+    height: 170px;
     transition:transform .5s;
     backface-visibility:hidden;
   }
@@ -80,13 +81,16 @@ body{
   }
 }
 
-.preview {
+.preview{
   height:70px;
   a > div{
-    $height: 16px;
+    $height:16px;
     margin-top:-$height;
     height:$height;
-    line-height: $height;
-    font-size: 12px;
+    line-height:$height;
+    font-size:12px;
+  }
+  img {
+    height:70px;
   }
 }
