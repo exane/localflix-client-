@@ -35,7 +35,7 @@ export class Items extends Component {
     })
 
     let items = list.map((item, id) => {
-      let src = "./assets/default_poster.jpg"
+      let src = this.props.smallPreview ? "./assets/default_poster_preview.jpg" : "./assets/default_poster.jpg"
       if(item.PosterPath) {
         src = `http://image.tmdb.org/t/p/w185/${item.PosterPath}`
       } else if(item.StillPath) {
@@ -50,6 +50,7 @@ export class Items extends Component {
         <div key={id} className={classNames(cssClasses)}>
           <Link to={this.parse(this.props.link_to, item)}>
             <img src={src}/>
+            <div>{item.Name} {item.Seasons !== undefined ? '' : `| ${item.OriginalName}`}</div>
           </Link>
         </div>
       )
