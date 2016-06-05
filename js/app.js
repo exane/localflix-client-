@@ -19,7 +19,7 @@ render((
       <Route path="/" component={Home}></Route>
       <Route path="serie/:serieID" component={Serie}></Route>
       <Route path="season/:seasonID" component={Season}></Route>
-      <Route path="watch/:videoID" component={Video}></Route>
+      <Route path="watch/:seasonID/:videoID" component={Video}></Route>
     </Router>
   </Provider>
 ), document.querySelector("#root"))

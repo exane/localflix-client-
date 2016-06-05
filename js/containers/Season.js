@@ -57,7 +57,7 @@ class Season extends Component {
                 editValues={this.season}/>
         <div className="row">
           <div className="col-sm-12 list">
-            <Items link_to="/watch/:ID" list={this.season.Episodes || []} smallPreview={true}/>
+            <Items link_to="/watch/:SeasonID/:ID" list={this.season.Episodes || []} smallPreview={true}/>
           </div>
         </div>
       </div>

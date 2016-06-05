@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { connect } from 'react-redux'
-import { getVideo } from "../actions"
+import { push } from 'react-router-redux'
+import { getVideo, getSeason } from "../actions"
 import wjs from "wcjs-player"
 import config from "../config"
 import Breadcrumb from "../components/Breadcrumb"
@@ -9,16 +10,17 @@ import Header from "../components/Header"
 
 class Video extends Component {
   state = {
-    edit: false
+    edit: false,
+    reload: false,
   }
 
   constructor(props) {
     super(props)
     this.config = config.load()
-    this.props.dispatch(getVideo(this.props.params.videoID))
   }
 
   componentDidMount() {
+    this.load()
     this.player = new wjs("#player").addPlayer({autoplay: true})
     this.player.volume(50)
     this.player.onFirstPlay(() => {
@@ -32,17 +34,62 @@ class Video extends Component {
     return `${this.config.fileserver.url}:${this.config.fileserver.port}/${this.video(props).SerieName}/${this.video(props).SeasonName}`
   }
 
-  componentWillReceiveProps(newProps) {
-    const url = `${this.urlPath(newProps)}/${this.video(newProps).Name}.${this.video(newProps).Extension}`
+  addPreviousButton() {
+    const btn = this.player.find(".wcp-prev")
+    btn.show()
+    btn.off("click")
+    btn.on("click", () => this.jumpToRelativeEpisode(-1))
+  }
+
+  addNextButton() {
+    const btn = this.player.find(".wcp-next")
+    btn.show()
+    btn.off("click")
+    btn.on("click", () => this.jumpToRelativeEpisode(1))
+  }
+
+  jumpToRelativeEpisode(number = 1) {
+    let self = this
+    console.log(self.props.store.seasons[self.props.params.seasonID].Episodes);
+    const currentEpisode = self.props.store.episodes[self.props.params.videoID]
+    const newEpisode = self.props.store.seasons[self.props.params.seasonID].Episodes.find(e => {
+      return (e.Name | 0) == (currentEpisode.Name | 0) + number
+    })
+    if(!newEpisode) return
+    console.log(newEpisode);
+    console.log(`/watch/${self.props.params.seasonID}/${newEpisode.ID}`)
+    this.props.dispatch(push(`/watch/${self.props.params.seasonID}/${newEpisode.ID}`))
+    this.setState({reload: true})
+  }
+
+  loadVideo(nextProps = this.props) {
+    const url = `${this.urlPath(nextProps)}/${this.video(nextProps).Name}.${this.video(nextProps).Extension}`
+    this.player.clearPlaylist()
     this.player.addPlaylist({
       url: encodeURI(url),
-      subtitles: this.subtitles(newProps),
-      //aspectRatio: "default",
+      subtitles: this.subtitles(nextProps),
     })
+    this.player.play()
+    this.addPreviousButton()
+    this.addNextButton()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.state.reload) {
+      this.load(nextProps)
+    }
+  }
+
+  load(nextProps = this.props) {
+    this.setState({reload: false})
+    this.props.dispatch(getVideo(nextProps.params.videoID)).then(() => this.loadVideo())
+    this.props.dispatch(getSeason(nextProps.params.seasonID))
   }
 
   componentWillUnmount() {
+    this.player.pause()
     this.player.stop()
+    this.player.clearPlaylist()
   }
 
   video(newProps = undefined) {
